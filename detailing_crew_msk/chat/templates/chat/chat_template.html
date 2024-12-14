@@ -1,0 +1,15 @@
+<!-- chat_template.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Chat Messages</h1>
+    <ul>
+        {% for message in chat_messages %}
+            <li>{{ message.sender }}: {{ message.message }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

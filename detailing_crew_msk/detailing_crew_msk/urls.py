@@ -21,4 +21,5 @@ urlpatterns = [
     # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('chaining/', include('smart_selects.urls')),
     path('admin/', admin.site.urls),
+    # path('chat/', include('chat.urls')),
 ]

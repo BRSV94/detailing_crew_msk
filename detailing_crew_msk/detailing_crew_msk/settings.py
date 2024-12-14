@@ -46,12 +46,13 @@ INSTALLED_APPS = [
     'detailing.apps.DetailingConfig',
     'autos.apps.AutosConfig',
     'tg_bot.apps.TgBotConfig',
+    'chat.apps.ChatConfig',
 
     # 'djoser',
     # 'django_filters',
     # https://django-smart-selects.readthedocs.io/en/latest/
     'smart_selects',
-    # 'aiogram',
+    'aiogram',
 
 ]
 
@@ -147,3 +148,39 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# https://django-jet-reboot.readthedocs.io/en/latest/config_file.html
+# https://html-color.codes/
+# https://github.com/assem-ch/django-jet-reboot/blob/master/jet/static/jet/css/themes/light-violet/_variables.scss
+JET_THEMES = [
+    # {
+    #     'theme': 'purple',
+    #     'color': '#800080',
+    #     'title': 'Purple'
+    # },
+    {
+        'theme': 'default', # theme folder name
+        'color': '#47bac1', # color of the theme's button in user menu
+        'title': 'Default' # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]

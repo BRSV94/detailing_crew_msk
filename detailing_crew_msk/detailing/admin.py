@@ -7,6 +7,16 @@ from detailing.models import (Appointment, ClientUser, FlawTitle,
 
 from autos.models import Auto
 
+BOOLEAN_DICT = {True: "Да", False: "Нет"}
+
+
+class AutoInline(admin.TabularInline):
+    model = Auto
+
+
+class WorkInline(admin.TabularInline):
+    model = Work
+
 
 @admin.register(ClientUser)
 class ClientAdmin(admin.ModelAdmin):
@@ -38,6 +48,7 @@ class ClientAdmin(admin.ModelAdmin):
         'last_name',
         'first_name',
     )
+    inlines = (AutoInline,)
 
     @admin.display(description='Последний заказ-наряд клиента')
     def orders(self, obj):
@@ -66,8 +77,8 @@ class StaffAdmin(admin.ModelAdmin):
         'last_name',
     )
     list_display_links = (
-        'last_name',
-        'first_name',
+        'phone_number',
+        'username',
     )
 
     @admin.display(description='Заказ-наряды сотрудника')
@@ -91,7 +102,6 @@ class WorkAdmin(admin.ModelAdmin):
 
 
 @admin.register(Order)
-# class OrderAdmin(ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display =  (
         'client',
@@ -109,9 +119,9 @@ class OrderAdmin(admin.ModelAdmin):
         'date',
         'is_done',
     )
-    filter_vertical = (
-        'works',
-    )
+    # filter_vertical = (
+    #     'works',
+    # )
     list_display_links = (
         'client',
         'auto',
@@ -120,13 +130,23 @@ class OrderAdmin(admin.ModelAdmin):
         'price',
     )
     search_fields = (
-        # 'client',
-        # 'auto',
-        # 'executor',
-        # 'works',
-        # 'date',
-        # 'is_done',
+        'client',
+        'auto',
+        'executor',
+        'works',
+        'date',
+        'is_done',
     )
+    filter_horizontal = (
+        'works',
+    )
+    # raw_id_fields = (
+    #     'client',
+    # )
+    # inlines = (WorkInline,)
+
+    def is_done(self, obj: Order):
+        return BOOLEAN_DICT[obj.is_done]
 
 
 @admin.register(FlawTitle)
@@ -157,6 +177,9 @@ class AppointmentAdmin(admin.ModelAdmin):
         'client',
         'visit_time'
     )
+    # raw_id_fields = (
+    #     'client',
+    # )
 
     # class Meta:
     #     model = Appointment
