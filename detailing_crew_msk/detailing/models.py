@@ -256,6 +256,32 @@ class Appointment(models.Model):
                 f'{self.client} - {self.auto}.')
     
 
+class AppointmentThroughTg(models.Model):
+    phone_number = models.CharField(
+        max_length=12,
+        blank=False,
+        verbose_name='Номер телефона для связи',
+    )
+    name = models.CharField(
+        max_length=64,
+        blank=False,
+        verbose_name='Как обращаться при звонке',
+    )
+    desired_time = models.CharField(
+        max_length=128,
+        blank=False,
+        verbose_name='Удобное клиенту время для звонка',
+    )
+    
+    class Meta:
+        verbose_name = 'запись из телеграма'
+        verbose_name_plural = 'Записи из телеграма'
+
+    def __str__(self) -> str:
+        return (f'{self.name} ({self.phone_number}) желает записаться. '
+                f'Клиенту удобно, чтобы ему позвонили: {self.desired_time}')
+
+
 class ReviewChoices(models.IntegerChoices):
     GREAT = 5, 'Отлично'
     WELL = 4, 'Хорошо'

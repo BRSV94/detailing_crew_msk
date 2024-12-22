@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     
     # 'jet.dashboard',
     # https://github.com/assem-ch/django-jet-reboot
-    'jet',
+    # 'jet',
 
     'django.contrib.admin',
     'django.contrib.auth',

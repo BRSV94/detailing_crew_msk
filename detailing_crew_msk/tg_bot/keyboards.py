@@ -17,6 +17,7 @@ def start_keyboard():
     )
 
     keyboard = InlineKeyboardMarkup(
+    # keyboard = ReplyKeyboardRemove(
         inline_keyboard=[
             [appointment_button],
             [review_button],
