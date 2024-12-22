@@ -3,10 +3,8 @@ import json
 
 with (open('autos/brands_autos.json', 'r', encoding='utf-8') as brands,
       open('autos/models_autos.json', 'r', encoding='utf-8') as models):
-    
-    # list(list())
+
     CHOICE_BRANDS = json.load(brands)
-    # dict(list(list()))
     CHOICE_MODELS = json.load(models)
 
 

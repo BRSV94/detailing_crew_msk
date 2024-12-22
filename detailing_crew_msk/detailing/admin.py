@@ -1,9 +1,5 @@
-from typing import Any
 from django.contrib import admin
-from django.forms.widgets import SplitDateTimeWidget, SelectDateWidget, DateTimeBaseInput, DateTimeInput
-# from unfold.admin import ModelAdmin
-from detailing.models import (Appointment, ClientUser, FlawTitle,
-                     Order, StaffUser, Work)
+from detailing.models import Appointment, ClientUser, FlawTitle, Order, StaffUser, Work
 
 from autos.models import Auto
 
@@ -12,6 +8,7 @@ BOOLEAN_DICT = {True: "Да", False: "Нет"}
 
 class AutoInline(admin.TabularInline):
     model = Auto
+    extra = 1
 
 
 class WorkInline(admin.TabularInline):
@@ -41,7 +38,6 @@ class ClientAdmin(admin.ModelAdmin):
         'last_name',
         'first_name',
         'orders',
-        # 'autos',
     )
     search_fields = (
         'phone_number',
@@ -95,12 +91,6 @@ class WorkAdmin(admin.ModelAdmin):
     )
 
 
-# class FlawInline(admin.TabularInline):
-#     # model = Order.works.through
-#     model = Order.flaws
-#     extra = 0
-
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display =  (
@@ -119,9 +109,9 @@ class OrderAdmin(admin.ModelAdmin):
         'date',
         'is_done',
     )
-    # filter_vertical = (
-    #     'works',
-    # )
+    filter_vertical = (
+        'works',
+    )
     list_display_links = (
         'client',
         'auto',
@@ -137,13 +127,6 @@ class OrderAdmin(admin.ModelAdmin):
         'date',
         'is_done',
     )
-    filter_horizontal = (
-        'works',
-    )
-    # raw_id_fields = (
-    #     'client',
-    # )
-    # inlines = (WorkInline,)
 
     def is_done(self, obj: Order):
         return BOOLEAN_DICT[obj.is_done]
@@ -157,7 +140,6 @@ class FlawAdmin(admin.ModelAdmin):
 
 
 @admin.register(Appointment)
-# class AppointmentAdmin(ModelAdmin):
 class AppointmentAdmin(admin.ModelAdmin):
     list_display =  (
         'client',
@@ -177,13 +159,3 @@ class AppointmentAdmin(admin.ModelAdmin):
         'client',
         'visit_time'
     )
-    # raw_id_fields = (
-    #     'client',
-    # )
-
-    # class Meta:
-    #     model = Appointment
-    #     widgets = {
-    #         'visit_time': DateTimeInput,
-    #         # SelectDateWidget, DateTimeBaseInput, DateTimeInput
-    #     }

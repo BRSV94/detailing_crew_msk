@@ -32,9 +32,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     
+    # https://django-jet-reboot.readthedocs.io/en/latest/install_dashboard.html
     # 'jet.dashboard',
     # https://github.com/assem-ch/django-jet-reboot
-    # 'jet',
+    # https://django-jet-reboot.readthedocs.io/en/latest/install.html
+    'jet',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,13 +47,14 @@ INSTALLED_APPS = [
 
     'detailing.apps.DetailingConfig',
     'autos.apps.AutosConfig',
-    'tg_bot.apps.TgBotConfig',
-    'chat.apps.ChatConfig',
+    # 'tg_bot.apps.TgBotConfig',
+    # 'chat.apps.ChatConfig',
 
     # 'djoser',
     # 'django_filters',
     # https://django-smart-selects.readthedocs.io/en/latest/
     'smart_selects',
+    # https://docs.aiogram.dev/en/stable/
     'aiogram',
 
 ]

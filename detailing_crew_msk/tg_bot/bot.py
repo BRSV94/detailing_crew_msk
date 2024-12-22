@@ -10,24 +10,19 @@ import logging
 import re
 import sys
 
-from aiogram import Bot, Dispatcher, F, Router, types
+from aiogram import Bot, Dispatcher, F, Router
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message, CallbackQuery
-from aiogram.utils.markdown import hbold
-
-from aiogram.filters import StateFilter
-from aiogram.filters.state import State, StateFilter
+from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.state import StatesGroup
 
 from dotenv import load_dotenv
 
 from callbacks import MyCallback
 from keyboards import start_keyboard, review_keyboard
 from texts import GREETING_TEXT
-from states import ActionState, AppointmentStates, ReviewStates
+from states import AppointmentStates, ReviewStates
 
 from detailing.models import AppointmentThroughTg
 
@@ -59,7 +54,7 @@ async def create_appointment(message: Message, state: FSMContext):
     await state.set_state(AppointmentStates.phone_num)
     await message.answer(
         'Введите ваш номер телефона:',
-        show_alert=True,
+        show_alert=False,
     )
 
 
@@ -96,6 +91,11 @@ async def create_appointment(message: Message, state: FSMContext):
         name=name,
         desired_time=desired_time,
     )
+    await message.answer(
+        f'{name}, благодарим за обращение.\n'
+        'Наш администратор позвонит вам для уточнения информации по записи '
+        f'на номер: {phone_num}.'
+    )
     # appointment.save()
     # appointment = (
     #     f'Тел.: {phone_num}\n'
@@ -105,50 +105,13 @@ async def create_appointment(message: Message, state: FSMContext):
     # await message.answer(appointment)
 
 
-@r.callback_query(MyCallback.filter(F.data == 'review'))
-async def create_appointment(message: Message, state: FSMContext):
-    # await state.set_data(AppointmentStates.phone_num)
-    await message.answer(
-        # 'Введите ваш номер телефона:',
-        'ZAZAZAZAZAAZAZAZAZAZAZAZAA',
-        show_alert=False,
-    )
-
-
-
-# # @dp.message(ActionState.action, ```ЧТО СЮДА ПИСАТЬ, ЧТОБЫ ВЫЦЕПИТЬ ДАННЫЕ ИЗ КНОПКИ?```)
-# @dp.callback_query(MyCallback.filter(F.data == 'appointment'))
-# # async def appointment_action(message: Message, state: FSMContext):
-# async def appointment_action(query: CallbackQuery,
-#                             #  message: Message,
-#                              callback_data: MyCallback,
-#                              state: FSMContext):
-#     await state.set_state(AppointmentStates.phone_num)
-#     await query.answer('Введите ваш номер телефона:', show_alert=False)
-
-
-
-
-
-
-
-
-# # @dp.message_handler()
-# # async def process_message(message: types.Message):
-#     # Проверяем, что пользовательский ввод является номером телефона
-#     if message.text.isdigit() and len(message.text) == 10:
-#         # Валидация успешна, создаем кнопку "Подтвердить"
-#         from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-#         keyboard = InlineKeyboardMarkup()
-#         keyboard.add(InlineKeyboardButton("Подтвердить", callback_data="confirm"))
-
-#         await message.answer("Вы ввели номер телефона: " + message.text, reply_markup=keyboard)
-#     else:
-#         await message.answer("Пожалуйста, введите корректный номер телефона (10 цифр)")
-
-
-
+# @r.callback_query(MyCallback.filter(F.data == 'review'))
+# async def create_appointment(message: Message, state: FSMContext):
+#     # await state.set_data(AppointmentStates.phone_num)
+#     await message.answer(
+#         'Напишите отзыв.',
+#         show_alert=False,
+#     )
 
 
 async def main() -> None:
