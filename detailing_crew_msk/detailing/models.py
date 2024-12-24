@@ -211,6 +211,10 @@ class Order(models.Model):
         works = obj.works.all()
         for work in works:
             price += work.price
+        if obj.discount:
+            price -= obj.discount
+            if price < 0:
+                return 0
         return price
 
 
@@ -236,9 +240,6 @@ class Appointment(models.Model):
     visit_time = models.DateTimeField(
         verbose_name='Планируемая дата и время посещения',
         auto_now_add=False,
-        # НУЖЕН ВИДЖЕТ
-        # https://stackoverflow.com/questions/4176613/django-admin-using-a-custom-widget-for-only-one-model-field
-        # Возможно тут написано что-то дельное. Я спать.
     )
     description = models.CharField(
         max_length=1024,
